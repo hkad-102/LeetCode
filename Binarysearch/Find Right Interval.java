@@ -72,12 +72,12 @@ class Solution {
         //min value from column 0 and max form column 1
         //column 0 is all starting points
         //column 1 is all end points
-        int min = Integer.MAX_VALUE;
-        int max = Integer.MIN_VALUE;
+        int startmin = Integer.MAX_VALUE;
+        int endmax = Integer.MIN_VALUE;
         int length = intervals.length;
         for(int[] column: intervals){
-            min = Math.min(min, column[0]);
-            max = Math.max(max, column[1]);
+            startmin = Math.min(min, column[0]);
+            endmax = Math.max(max, column[1]);
         }
         
         //make a map of size = max - min + 1
