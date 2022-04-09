@@ -64,5 +64,53 @@ class Solution {
         return res;
     }
 }
+
+/* Another solution*/
+class Solution {
+    public int[] findRightInterval(int[][] intervals) {
+        //step 1 we find the max and min value in intervals 
+        //min value from column 0 and max form column 1
+        //column 0 is all starting points
+        //column 1 is all end points
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        int length = intervals.length;
+        for(int[] column: intervals){
+            min = Math.min(min, column[0]);
+            max = Math.max(max, column[1]);
+        }
         
+        //make a map of size = max - min + 1
+        int size = max - min + 1;
+        int map[] = new int[size];
+        //each element of map is initialize by min value
+        for(int ind = 0; ind < size; ind++){
+            map[ind] = Integer.MIN_VALUE;
+        }
+        //here we store the index of the first right interval of current interval 
+        for(int ind = 0; ind < length; ind++){
+            //here we use starting points - min store ind there
+            map[intervals[ind][0] - min] = ind;
+        }
+        //if there any one left with min value inside the size replace it one plus value of that index
+        for(int ind = size - 2; ind >= 0; ind--){
+            if(map[ind] == Integer.MIN_VALUE){
+                map[ind] = map[ind + 1];
+            }
+        }
+        //make a result array to store the index for each interval 
+        //if there any right interval than return its index otherwise store -1
+        int res[] = new int[length];
+        for(int ind = 0; ind < length; ind++){
+            //for val we use end points - min from it and check in the map is there any index
+            int val = map[intervals[ind][1] - min];
+            if(val == Integer.MIN_VALUE){
+                res[ind] = -1;
+            }else{
+                res[ind] = val;
+            }
+        }
+        return res;
+    }
+}
       
